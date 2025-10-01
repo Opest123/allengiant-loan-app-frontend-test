@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen">
         <div class="border-b border-gray-200 bg-white dark:border-white/10 dark:bg-gray-800/50">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="w-full flex items-center justify-between">
                     <div class="flex items-center gap-2 text-xl tracking-wide">
                         <h1 class="font-bold text-gray-900 dark:text-white">
