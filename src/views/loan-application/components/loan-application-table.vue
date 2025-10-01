@@ -42,7 +42,7 @@
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-white/10 dark:bg-gray-900">
-                <tr v-for="data in loanApplicationStore.tableData" :key="data.id">
+                <tr v-for="data in tableData" :key="data.id">
                     <td class="w-full max-w-0 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:w-auto sm:max-w-none sm:pl-0 dark:text-white">
                         {{ data.id }}
                         <dl class="font-normal lg:hidden">
@@ -117,27 +117,8 @@
 </template>
 
 <script setup>
-import { inject, onMounted, watch } from 'vue'
 import { TrashIcon } from '@heroicons/vue/24/outline'
-import { useLoanApplicationStore } from '../../../stores/loanApplicationStore.js'
+import { inject } from 'vue'
 
-let debounceTimer = null
-const loanApplicationStore = useLoanApplicationStore()
-const filters = inject('filters')
-
-onMounted(() => {
-    // Fetch loan application
-    loanApplicationStore.fetchLoanApplications(loanApplicationStore.filters)
-})
-
-watch(
-    filters,
-    (newVal) => {
-        clearTimeout(debounceTimer)
-        debounceTimer = setTimeout(() => {
-            loanApplicationStore.fetchLoanApplications(newVal)
-        }, 500)
-    },
-    { deep: true }
-)
+const tableData = inject('tableData')
 </script>

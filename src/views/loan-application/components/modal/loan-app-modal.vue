@@ -54,7 +54,7 @@
                                             name="applicant_full_name"
                                             id="applicant_full_name"
                                             placeholder="Name..."
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.applicant_full_name"
@@ -75,7 +75,7 @@
                                             name="email"
                                             id="email"
                                             placeholder="Email..."
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.email" :value="errors?.email"/>
@@ -94,7 +94,7 @@
                                             name="phone"
                                             id="phone"
                                             placeholder="Phone..."
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.phone" :value="errors?.phone"/>
@@ -114,7 +114,7 @@
                                             name="date_of_birth"
                                             id="date_of_birth"
                                             placeholder="Date of birth..."
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.date_of_birth" :value="errors?.date_of_birth"/>
@@ -133,7 +133,7 @@
                                             :items="vehicleTypes"
                                             label="Select vehicle type"
                                             class="col-span-3 lg:col-span-1"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.vehicle_type" :value="errors?.vehicle_type"/>
@@ -152,7 +152,7 @@
                                             :items="vehicleMakes"
                                             label="Select vehicle make"
                                             class="col-span-3 lg:col-span-1"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.vehicle_make" :value="errors?.vehicle_make"/>
@@ -171,7 +171,7 @@
                                             :items="vehicleModels"
                                             label="Select vehicle model"
                                             class="col-span-3 lg:col-span-1"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.vehicle_model" :value="errors?.vehicle_model"/>
@@ -193,7 +193,7 @@
                                             placeholder="Purchase price..."
                                             :min="0"
                                             :step="'0.01'"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.purchase_price" :value="errors?.purchase_price"/>
@@ -215,7 +215,7 @@
                                             placeholder="Deposit amount..."
                                             :min="0"
                                             :step="'0.01'"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.deposit_amount" :value="errors?.deposit_amount"/>
@@ -234,7 +234,7 @@
                                             :items="termMonthsRange(6, 96)"
                                             label="Select term"
                                             class="col-span-3 lg:col-span-1"
-                                            :disabled="!!form.id || loading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.term_months" :value="errors?.term_months"/>
@@ -269,7 +269,7 @@
                                         <base-checkbox
                                             v-model="consent_to_credit_check"
                                             label="Consent to credit check"
-                                            :disabled="loading"
+                                            :disabled="modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.consent_to_credit_check"
@@ -280,7 +280,7 @@
                                         <button
                                             type="submit"
                                             class="capitalize inline-flex w-full justify-center cursor-pointer rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-500 sm:mt-0 sm:w-auto dark:bg-white/10 dark:text-white dark:shadow-none dark:ring-white/5 dark:hover:bg-indigo-400"
-                                            :disabled="loading"
+                                            :disabled="modalDataLoading"
                                         >
                                             submit
                                         </button>
@@ -316,7 +316,7 @@ const loanApplicationStore = useLoanApplicationStore()
 const modalData = inject('modalData')
 const form = inject('form')
 const vehicleTypes = inject('vehicleTypes')
-const loading = inject('loading')
+const modalDataLoading = inject('modalDataLoading')
 
 const submitted = ref(false)
 

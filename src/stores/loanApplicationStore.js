@@ -13,7 +13,8 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
         },
         modalData: {
             visible: false,
-            type: 'create'
+            type: 'create',
+            loading: false
         },
         form: {
             applicant_full_name: '',
@@ -49,6 +50,8 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
 
                     this.data = response?.data
 
+                    this.loading = false
+
                     resolve(response)
                 } catch (e) {
                     this.loading = false
@@ -60,7 +63,7 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
         async storeLoanApplication (data) {
             return new Promise(async (resolve, reject) => {
                 try {
-                    this.loading = true
+                    this.modalData.loading = true
 
                     const response = await api.post('loan-applications', data)
 
@@ -74,10 +77,10 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
                         }
                     }
 
-                    this.loading = false
+                    this.modalData.loading = false
                     resolve(response)
                 } catch (e) {
-                    this.loading = false
+                    this.modalData.loading = false
                     reject(e)
                     return Promise.reject(e.response?.errors)
                 }
