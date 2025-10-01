@@ -1,5 +1,15 @@
-# Vue 3 + Vite
+# LoanAppTest Frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## N:B
+Ensure this repo is installed in the same directory as the docker repo and docker is running
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+### ENV Setup
+- VITE_APP_ENV=local
+- VITE_URL=http://loanapp.test:5173
+- VITE_API_URL=http://loanapp.test:8004
+
+### Command RUNs
+- npm install
+
+### Screenshots
+![](../../../Desktop/Screenshot 2025-10-02 at 7.18.38 am.png)![](../../../Desktop/Screenshot 2025-10-02 at 7.18.46 am.png)![](../../../Desktop/Screenshot 2025-10-02 at 7.18.54 am.png)![](../../../Desktop/Screenshot 2025-10-02 at 7.25.13 am.png)![](../../../Desktop/Screenshot 2025-10-02 at 7.25.20 am.png)
