@@ -31,8 +31,8 @@
                 <div class="col-span-12 lg:col-span-2">
                     <button
                         type="button"
-                        class="capitalize block w-full rounded-xl bg-indigo-600 px-3 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
-                        @click="handleModal"
+                        class="cursor-pointer capitalize block w-full rounded-xl bg-indigo-600 px-3 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
+                        @click="handleModalVisibility(null)"
                     >
                         create loan app
                     </button>
@@ -51,12 +51,7 @@ import LoanAppModal from '../components/modal/loan-app-modal.vue'
 import BaseInput from '../../../components/base-input.vue'
 
 const filters = inject('filters')
-const modalData = inject('modalData')
 const vehicleTypes = inject('vehicleTypes')
-
-const statusOptions = ['submitted', 'in review', 'approved', 'declined']
-
-const handleModal = () => {
-    modalData.visible = true
-}
+const statusOptions = inject('statusOptions')
+const handleModalVisibility = inject('handleModalVisibility')
 </script>

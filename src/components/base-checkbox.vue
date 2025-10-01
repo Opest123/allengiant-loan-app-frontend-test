@@ -16,7 +16,8 @@
               dark:indeterminate:border-indigo-500 dark:indeterminate:bg-indigo-500
               dark:focus-visible:outline-indigo-500 dark:disabled:border-white/5 dark:disabled:bg-white/10
               dark:disabled:checked:bg-white/10 forced-colors:appearance-auto"
-               :value="modelValue"
+                :checked="modelValue"
+                :value="modelValue"
                 :disabled="disabled"
                 :indeterminate.prop="indeterminate"
                 @change="$emit('update:modelValue', $event.target.checked)"

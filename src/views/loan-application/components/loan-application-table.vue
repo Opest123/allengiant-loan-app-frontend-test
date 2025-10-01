@@ -92,20 +92,24 @@
                         {{ data.status }}
                     </td>
                     <td class="hidden lg:table-cell px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
-                        {{ data.submitted_at }}
+                        {{
+                            formatDate(data.submitted_at, 'DD MMM YYYY, h:mm A')
+                        }}
                     </td>
-                    <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-4">
                         <button
-
-                            class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
+                            @click="handleModalVisibility(data)"
+                            class="cursor-pointer text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
                         >
-                            Edit <span class="sr-only">, {{ data.name }}</span>
+                            <EyeIcon class="size-6" aria-hidden="true"/>
+                            <span class="sr-only">, {{ data.name }}</span>
                         </button>
-                        <button
 
-                            class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
+                        <button
+                            @click="loanApplicationStore?.deleteLoanApplication(data)"
+                            class="cursor-pointer text-red-500 hover:text-indigo-900 dark:text-red-400 dark:hover:text-red-300"
                         >
-                            <TrashIcon/>
+                            <TrashIcon class="size-6" aria-hidden="true"/>
                             <span class="sr-only">, {{ data.name }}</span>
                         </button>
                     </td>
@@ -113,12 +117,26 @@
                 </tbody>
             </table>
         </div>
+
+        <base-pagination
+            @page-changed="handlePageChange"
+        />
     </div>
 </template>
 
 <script setup>
-import { TrashIcon } from '@heroicons/vue/24/outline'
+import { TrashIcon, EyeIcon } from '@heroicons/vue/24/outline'
 import { inject } from 'vue'
+import { formatDate } from '../../../utils/format-date.js'
+import BasePagination from '../../../components/base-pagination.vue'
+import { useLoanApplicationStore } from '../../../stores/loanApplicationStore.js'
 
 const tableData = inject('tableData')
+const handleModalVisibility = inject('handleModalVisibility')
+const filters = inject('filters')
+let loanApplicationStore = useLoanApplicationStore()
+
+const handlePageChange = (data) => {
+    filters.value.page = data
+}
 </script>

@@ -7,11 +7,11 @@
         <div class="relative">
             <ListboxButton
                 class="grid w-full cursor-default grid-cols-1 rounded-xl bg-white py-3 pl-3 pr-2 text-left text-white outline outline-1 -outline-offset-1 outline-gray-300 focus-within:outline focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:bg-white/5 dark:outline dark:outline-1 dark:-outline-offset-1 dark:outline-white/10 dark:focus-within:outline-indigo-500 sm:text-sm/6 dark:bg-white/5"
+                :class="{'pointer-events-none': disabled}"
             >
                 <ListboxLabel
                     v-if="!selected"
                     class="col-start-1 row-start-1 block text-sm/6 !text-gray-400 dark:text-white dark:text-gray-500"
-                    :class="{'cursor-pointer-none': disabled}"
                 >
                     {{ label }}
                 </ListboxLabel>
@@ -67,7 +67,6 @@ const props = defineProps({
         required: true
     },
     modelValue: {
-        type: [Object, String, Number],
         required: true
     },
     label: {

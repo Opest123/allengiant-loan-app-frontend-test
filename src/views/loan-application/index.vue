@@ -29,15 +29,16 @@ import Skeleton from '../../components/skeleton.vue'
 
 import vehicleData from '../../data/vehicles.json'
 
+const statusOptions = ['submitted', 'in review', 'approved', 'declined']
+
 let debounceTimer = null
 let loanApplicationStore = useLoanApplicationStore()
 
 const filters = computed(() => {
     return loanApplicationStore.filters
 })
-const modalData = computed(() => {
-    return loanApplicationStore.modalData
-})
+const modalData = loanApplicationStore.modalData
+
 const form = computed(() => {
     return loanApplicationStore.form
 })
@@ -50,9 +51,20 @@ const modalDataLoading = computed(() => {
 const tableData = computed(() => {
     return loanApplicationStore.tableData
 })
+const links = computed(() => {
+    return {
+        meta: loanApplicationStore.data?.meta,
+        links: loanApplicationStore.data?.links,
+    }
+})
 
 // Vehicle type options
 const vehicleTypes = Object.keys(vehicleData)
+
+const handleModalVisibility = (data = null) => {
+    loanApplicationStore.form = data ? data :loanApplicationStore.defaultForm
+    modalData.visible = !modalData.visible
+}
 
 provide('filters', filters)
 provide('modalData', modalData)
@@ -61,6 +73,9 @@ provide('vehicleTypes', vehicleTypes)
 provide('loading', loading)
 provide('modalDataLoading', modalDataLoading)
 provide('tableData', tableData)
+provide('statusOptions', statusOptions)
+provide('links', links)
+provide('handleModalVisibility', handleModalVisibility)
 
 onMounted(() => {
     // Fetch loan application

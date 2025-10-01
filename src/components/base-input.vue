@@ -6,7 +6,7 @@
             :name="name"
             :id="id"
             :placeholder="placeholder"
-            :value="modelValue"
+            :value="inputValue"
             @input="$emit('update:modelValue', $event.target.value)"
             :class="classes"
             :min="min"
@@ -59,4 +59,21 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+
+// computed proxy for input value
+const inputValue = computed({
+    get() {
+        if (props.type === 'date' && props.modelValue) {
+            // normalize ISO or Date into yyyy-MM-dd
+            const d = new Date(props.modelValue)
+            if (!isNaN(d)) {
+                return d.toISOString().split('T')[0]
+            }
+        }
+        return props.modelValue
+    },
+    set(val) {
+        emit('update:modelValue', val)
+    }
+})
 </script>

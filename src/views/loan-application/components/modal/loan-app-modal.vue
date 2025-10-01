@@ -269,7 +269,7 @@
                                         <base-checkbox
                                             v-model="consent_to_credit_check"
                                             label="Consent to credit check"
-                                            :disabled="modalDataLoading"
+                                            :disabled="!!form.id || modalDataLoading"
                                         />
 
                                         <base-error v-if="errors?.consent_to_credit_check"
@@ -311,16 +311,16 @@ import { differenceInYears } from 'date-fns'
 import vehicleData from '../../../../data/vehicles.json'
 import { useLoanApplicationStore } from '../../../../stores/loanApplicationStore.js'
 
+let isResettingForm = false
 const loanApplicationStore = useLoanApplicationStore()
 
 const modalData = inject('modalData')
 const form = inject('form')
 const vehicleTypes = inject('vehicleTypes')
+const statusOptions = inject('statusOptions')
 const modalDataLoading = inject('modalDataLoading')
 
 const submitted = ref(false)
-
-const statusOptions = ['submitted', 'in review', 'approved', 'declined']
 
 const title = computed(() => {
     return `${modalData?.type} Loan Application`
@@ -346,23 +346,38 @@ const schema = yup.object({
 })
 
 // Use VeeValidate for form management and validation
-const { handleSubmit, errors } = useForm({
+const { handleSubmit, errors, resetForm } = useForm({
     validationSchema: schema,
+    initialValues: form
 })
 
 // Register form fields with VeeValidate
-const { value: applicant_full_name } = useField('applicant_full_name', undefined, { initialValue: form.applicant_full_name })
-const { value: email } = useField('email', undefined, { initialValue: form.email })
-const { value: phone } = useField('phone', undefined, { initialValue: form.phone })
-const { value: date_of_birth } = useField('date_of_birth', undefined, { initialValue: form.date_of_birth })
-const { value: vehicle_type } = useField('vehicle_type', undefined, { initialValue: form.vehicle_type })
-const { value: vehicle_make } = useField('vehicle_make', undefined, { initialValue: form.vehicle_make })
-const { value: vehicle_model } = useField('vehicle_model', undefined, { initialValue: form.vehicle_model })
-const { value: purchase_price } = useField('purchase_price', undefined, { initialValue: form.purchase_price })
-const { value: deposit_amount } = useField('deposit_amount', undefined, { initialValue: form.deposit_amount })
-const { value: term_months } = useField('term_months', undefined, { initialValue: form.term_months })
-const { value: status } = useField('status', undefined, { initialValue: form.status })
-const { value: consent_to_credit_check } = useField('consent_to_credit_check', undefined, { initialValue: form.consent_to_credit_check })
+const { value: applicant_full_name } = useField('applicant_full_name', undefined, { initialValue: form?.value?.applicant_full_name })
+const { value: email } = useField('email', undefined, { initialValue: form?.value?.email })
+const { value: phone } = useField('phone', undefined, { initialValue: form?.value?.phone })
+const { value: date_of_birth } = useField('date_of_birth', undefined, { initialValue: form?.value?.date_of_birth })
+const { value: vehicle_type } = useField('vehicle_type', undefined, { initialValue: form?.value?.vehicle_type })
+const { value: vehicle_make } = useField('vehicle_make', undefined, { initialValue: form?.value?.vehicle_make })
+const { value: vehicle_model } = useField('vehicle_model', undefined, { initialValue: form?.value?.vehicle_model })
+const { value: purchase_price } = useField('purchase_price', undefined, { initialValue: form?.value?.purchase_price })
+const { value: deposit_amount } = useField('deposit_amount', undefined, { initialValue: form?.value?.deposit_amount })
+const { value: term_months } = useField('term_months', undefined, { initialValue: form?.value?.term_months })
+const { value: status } = useField('status', undefined, { initialValue: form?.value?.status })
+const { value: consent_to_credit_check } = useField('consent_to_credit_check', undefined, { initialValue: form?.value?.consent_to_credit_check })
+
+watch(() => form, (newVal) => {
+    isResettingForm = true
+
+    // reset vee-validate fields with new data
+    resetForm({
+        values: { ...newVal?.value }
+    })
+
+    // Explicitly set dependent fields
+    vehicle_type.value = newVal?.value?.vehicle_type || ''
+    vehicle_make.value = newVal?.value?.vehicle_make || ''
+    vehicle_model.value = newVal?.value?.vehicle_model || ''
+}, { deep: true, immediate: true })
 
 // Makes for the selected type
 const vehicleMakes = computed(() => {
@@ -378,20 +393,28 @@ const vehicleModels = computed(() => {
 
 // Reset dependent fields when parent changes
 watch(() => vehicle_type?.value, (newVal, oldVal) => {
-    if (newVal !== oldVal) {
-        vehicle_make.value = ''
-        vehicle_model.value = ''
-    }
+    if (isResettingForm || !newVal) return
+
+    if (!vehicle_make.value || newVal !== oldVal) vehicle_make.value = ''
+    if (!vehicle_model.value || newVal !== oldVal) vehicle_model.value = ''
 })
 
-watch(() => vehicle_make.value, () => {
+watch(() => vehicle_make.value, (newVal) => {
+    if (isResettingForm || !newVal) return
+
     vehicle_model.value = ''
 })
 
 const submit = handleSubmit(async (values) => {
     try {
         Object.assign(form, values)
-        await loanApplicationStore.storeLoanApplication(values)
+
+        if (values.status === 'in review') values.status = 'in_review'
+        if (!values?.id) {
+            await loanApplicationStore.storeLoanApplication(values)
+        } else {
+            await loanApplicationStore.updateLoanApplication(values)
+        }
     } catch (error) {
         // Handle login errors (e.g., display error message)
         console.error('Login error:', error)
