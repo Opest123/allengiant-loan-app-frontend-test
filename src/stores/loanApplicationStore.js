@@ -1,6 +1,8 @@
 // stores/auth.js
 import { defineStore } from 'pinia'
 import api from '../utils/api.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export const useLoanApplicationStore = defineStore('loanApplicationStore', {
     state: () => ({
@@ -70,10 +72,14 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
 
                     this.loading = false
 
+                    toast.success('Loan application fetched successfully')
+
                     resolve(response)
                 } catch (e) {
                     this.loading = false
                     reject(e)
+
+                    toast.error('Error fetching loan application')
                     return Promise.reject(e.response?.errors)
                 }
             })
@@ -99,10 +105,14 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
 
                     this.modalData.loading = false
                     this.modalData.visible = false
+
+                    toast.success('Loan application created successfully')
                     resolve(response)
                 } catch (e) {
                     this.modalData.loading = false
                     reject(e)
+
+                    toast.error('Error creating loan application')
                     return Promise.reject(e.response?.errors)
                 }
             })
@@ -120,10 +130,14 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
 
                     this.modalData.loading = false
                     this.modalData.visible = false
+
+                    toast.success('Loan application updated successfully')
                     resolve(response)
                 } catch (e) {
                     this.modalData.loading = false
                     reject(e)
+
+                    toast.success('Error encountered updating loan application')
                     return Promise.reject(e.response?.errors)
                 }
             })
@@ -140,10 +154,14 @@ export const useLoanApplicationStore = defineStore('loanApplicationStore', {
                     this.data.meta.total--
 
                     this.modalData.loading = false
+
+                    toast.success('Loan application deleted successfully')
                     resolve(response)
                 } catch (e) {
                     this.modalData.loading = false
                     reject(e)
+
+                    toast.error('Error encounter deleting loan application')
                     return Promise.reject(e.response?.errors)
                 }
             })
