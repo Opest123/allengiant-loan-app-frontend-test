@@ -16,4 +16,4 @@ Ensure this repo is installed in the same directory as the docker repo and docke
 ![Screenshot 2](screenshots/Screenshot 2025-10-02 at 7.18.46 am.png)
 ![Screenshot 3](screenshots/Screenshot 2025-10-02 at 7.18.54 am.png) 
 ![Screenshot 4](screenshots/Screenshot 2025-10-02 at 7.25.13 am.png)
-![Screenshot 5](screenshots/Screenshot 2025-10-02 at 7.25.20 am.png) 
+![Screenshot 5](screenshots/Screenshot 2025-10-02 at 7.25.20 am.png)
