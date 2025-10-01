@@ -98,7 +98,7 @@
                     </td>
                     <td class="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0 space-x-4">
                         <button
-                            @click="handleModalVisibility(data)"
+                            @click="handleModalVisibility(data, 'edit')"
                             class="cursor-pointer text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300"
                         >
                             <EyeIcon class="size-6" aria-hidden="true"/>
@@ -130,11 +130,13 @@ import { inject } from 'vue'
 import { formatDate } from '../../../utils/format-date.js'
 import BasePagination from '../../../components/base-pagination.vue'
 import { useLoanApplicationStore } from '../../../stores/loanApplicationStore.js'
+import { useAuthStore } from '../../../stores/authStore.js'
 
 const tableData = inject('tableData')
 const handleModalVisibility = inject('handleModalVisibility')
 const filters = inject('filters')
 let loanApplicationStore = useLoanApplicationStore()
+let authStore = useAuthStore()
 
 const handlePageChange = (data) => {
     filters.value.page = data

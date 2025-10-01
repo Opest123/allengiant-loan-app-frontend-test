@@ -33,6 +33,7 @@
                         type="button"
                         class="cursor-pointer capitalize block w-full rounded-xl bg-indigo-600 px-3 py-3 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500"
                         @click="handleModalVisibility(null)"
+                        :disabled="!authStore.isApplicant"
                     >
                         create loan app
                     </button>
@@ -49,6 +50,9 @@ import { inject } from 'vue'
 import SelectMenu from '../../../components/select-menu.vue'
 import LoanAppModal from '../components/modal/loan-app-modal.vue'
 import BaseInput from '../../../components/base-input.vue'
+import { useAuthStore } from '../../../stores/authStore.js'
+
+let authStore = useAuthStore()
 
 const filters = inject('filters')
 const vehicleTypes = inject('vehicleTypes')

@@ -24,6 +24,12 @@ export const useAuthStore = defineStore('authStore', {
         getaAuthenticated: (state) => {
             return state.authenticated
         },
+        isConsultant: (state) => {
+            return state.user?.data.role === "consultant"
+        },
+        isApplicant: (state) => {
+            return state.user?.data.role === "applicant"
+        }
     },
     actions: {
         async login (credentials) {

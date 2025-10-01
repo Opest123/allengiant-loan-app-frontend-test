@@ -61,9 +61,10 @@ const links = computed(() => {
 // Vehicle type options
 const vehicleTypes = Object.keys(vehicleData)
 
-const handleModalVisibility = (data = null) => {
+const handleModalVisibility = (data = null, type = 'create') => {
     loanApplicationStore.form = data ? data :loanApplicationStore.defaultForm
     modalData.visible = !modalData.visible
+    modalData.type = type
 }
 
 provide('filters', filters)
