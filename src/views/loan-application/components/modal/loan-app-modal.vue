@@ -279,7 +279,7 @@
                                     <div class="col-span-2 flex justify-end">
                                         <button
                                             type="submit"
-                                            class="capitalize inline-flex w-full justify-center cursor-pointer rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-500 sm:mt-0 sm:w-auto dark:bg-white/10 dark:text-white dark:shadow-none dark:ring-white/5 dark:hover:bg-indigo-400"
+                                            class="capitalize inline-flex w-full justify-center cursor-pointer rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-indigo-500 sm:mt-0 sm:w-auto dark:bg-indigo/10 dark:text-white dark:shadow-none dark:ring-white/5 dark:hover:bg-indigo-400"
                                             :disabled="modalDataLoading"
                                         >
                                             submit
